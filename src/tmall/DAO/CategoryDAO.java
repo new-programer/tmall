@@ -29,6 +29,7 @@ public class CategoryDAO
 {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
+		Statement stmt = null;
 		ResultSet rs = null;
 		
 	//1  增
@@ -63,10 +64,24 @@ public class CategoryDAO
 		try
 		{
 			conn = DBConn.getConnection();
-			String sql = "delete from category where id = ？";//以id为判断条件
+			
+//			/*方法一：用Statement进行删除*/
+//			stmt = conn.createStatement();
+//			String sql = "delete from category where id =" + id;
+//			stmt.execute(sql);
+			
+			/*方法二：用preparedStatement进行删除*/
+			String sql = "delete from category where id = ?";//以id为判断条件
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, id);
 			pstmt.execute();
+			
+			/*方法二，无法删除成功，不知到是为啥？报错：
+			 * Error show java.sql.SQLException: 
+			 * Parameter index out of range (1 > number of parameters, which is 0)
+			 * 
+			 * 注：可以了，之前sql语句中的问号“？”写的是中文的了
+			 */
 		} catch (SQLException e)
 		{
 			e.printStackTrace();

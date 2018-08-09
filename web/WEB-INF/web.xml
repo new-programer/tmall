@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<web-app>
+<web-app id="WebApp_1526785879393">
 	<!-- 配置servlet -->
+		<!-- CategoryServlet -->
 	<servlet>
 		<servlet-name>CategoryServlet</servlet-name>
 		<servlet-class>tmall.servlet.CategoryServlet</servlet-class>
@@ -10,9 +11,29 @@
 		<servlet-name>CategoryServlet</servlet-name>
 		<url-pattern>/categoryServlet</url-pattern>
 	</servlet-mapping>
+		<!-- PropertyServlet -->
+	<servlet>
+		<servlet-name>PropertyServlet</servlet-name>
+		<servlet-class>tmall.servlet.PropertyServlet</servlet-class>
+	</servlet>
 	
+	<servlet-mapping>
+		<servlet-name>PropertyServlet</servlet-name>
+		<url-pattern>/propertyServlet</url-pattern>
+	</servlet-mapping>	
+		<!-- ProductServlet -->
+	<servlet>
+		<servlet-name>ProductServlet</servlet-name>
+		<servlet-class>tmall.servlet.ProductServlet</servlet-class>
+	</servlet>
+	
+	<servlet-mapping>
+		<servlet-name>ProductServlet</servlet-name>
+		<url-pattern>/productServlet</url-pattern>
+	</servlet-mapping>	
 	
 	<!-- 配置filter -->
+		<!-- BackServletFilter -->
 	<filter>
 		<filter-name>BackServletFilter</filter-name>
 		<filter-class>tmall.filter.BackServletFilter</filter-class>
@@ -21,4 +42,31 @@
 		<filter-name>BackServletFilter</filter-name>
 		<url-pattern>/*</url-pattern>
 	</filter-mapping>
+	
+		<!-- EncodingFilter -->
+	<filter>
+		<filter-name>EncodingFilter</filter-name>
+		<filter-class>tmall.filter.EncodingFilter</filter-class>
+   		<async-supported>true</async-supported>
+		   <init-param>
+		      <param-name>encoding</param-name>
+		      <param-value>UTF-8</param-value>
+		   </init-param>
+		   <init-param>
+		      <param-name>forceEncoding</param-name>
+		      <param-value>UTF-8</param-value>
+		   </init-param>
+	</filter>
+	
+	<filter-mapping>
+		<filter-name>EncodingFilter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+	
+	
+	
+<!--	index page-->
+	<welcome-files-list>
+		<welcome-file>index.jps</welcome-file>
+	</welcome-files-list>
 </web-app>

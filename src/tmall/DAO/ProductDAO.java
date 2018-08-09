@@ -68,14 +68,15 @@ public class ProductDAO
 			conn = DBConn.getConnection();
 			String sql = "insert into Product values (null, ?, ?, ?, ?, ?, ?, ?)";
 			pstmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-			pstmt.setInt(1, product.getCategory().getId());  //获取某一分类的id
-			pstmt.setString(2, product.getName());
-			pstmt.setString(3, product.getSubTitle());
-			pstmt.setFloat(4, product.getOriginalPrice());
-			pstmt.setFloat(5, product.getPromotePrice());
-			pstmt.setInt(6, product.getStock());
+			pstmt.setString(1, product.getName());
+			pstmt.setString(2, product.getSubTitle());
+			pstmt.setFloat(3, product.getOriginalPrice());
+			pstmt.setFloat(4, product.getPromotePrice());
+			pstmt.setInt(5, product.getStock());
+			pstmt.setInt(6, product.getCategory().getId());  //获取某一分类的id
 			pstmt.setTimestamp(7, DateUtil.date_to_timestamp(product.getCreateDate()));			//日期转换（利用DateUtil工具）
 
+			
 			bool = pstmt.execute();   //执行插入操作,执行结果返回给bool，执行之后会生成自增id
 			
 			rs = pstmt.getGeneratedKeys();   //获取自增id
@@ -185,7 +186,7 @@ public class ProductDAO
 	}
 	
 	//非CRUD基本操作
-	//5  获取属性总数 （注意是某一分类对应的属性总数，故必须先获取Category 类id :'cid'）
+	//5  获取产品总数 （注意是某一分类对应的属性总数，故必须先获取Category 类id :'cid'）
 	public int getTotal(int cid)
 	{
 		int total = 0;
@@ -193,7 +194,7 @@ public class ProductDAO
 		try
 		{
 			conn = DBConn.getConnection();
-			String sql = "select count()* from product where cid = " + cid;
+			String sql = "select count(*) from product where cid = " + cid;
 			stmt = conn.createStatement();
 			rs = stmt.executeQuery(sql);
 			
@@ -214,7 +215,7 @@ public class ProductDAO
 	public List<Product> list (int cid, int start, int count)
 	{
 		//用products集合来收集查的product
-		List<Product> products = null;
+		List<Product> products = new ArrayList<>();
 		//连接数据库
 		try
 		{
@@ -230,7 +231,6 @@ public class ProductDAO
 			//遍历暂存在rs中的查询结果
 			while (rs.next())
 			{
-				products = new ArrayList<>();
 				Product product = new Product();
 				
 				product.setId(rs.getInt(1));   //rs中第一个就是product的id，故可用参数1获取
@@ -246,15 +246,17 @@ public class ProductDAO
 				//再将该category传给product的setCategory()函数
 				product.setCategory(category);
 				
-				setFirstProductImage(product);  //设置默认图片
+				
+				//setFirstProductImage(product);  //设置默认图片   （暂时注释掉这段代码）
 				products.add(product);  //讲遍历到的product添加到products集合list中去
 			}
 		} catch (SQLException e)
-		{
+		{ 
 			e.printStackTrace();
 		}
 		//断开数据库连接
 		DBClose.disconnection(pstmt, conn);
+		
 		return products;
 	}
 	

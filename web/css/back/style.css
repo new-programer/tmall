@@ -1,0 +1,33 @@
+div.addDiv
+{
+	width:400px;
+	margin:0px auto;
+}
+
+div.listDataTableDiv
+{
+	min-height:220px;
+	text-align:center; /*作用是让table下每个td里的内容都居中*/
+}
+
+div.pageDiv
+{
+	text-align:center;
+}
+
+div.workingArea
+{
+	margin:70px 40px;
+}
+
+<table.addTable td
+{
+	/* 详细了解padding属性见下面链接：
+	http://www.w3school.com.cn/cssref/pr_padding.asp */
+	padding:5px;
+	
+}
+tr.success
+{
+	align:center;
+}

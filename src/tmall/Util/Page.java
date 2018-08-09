@@ -67,6 +67,13 @@ public class Page
 		{
 			totalPage = total / count + 1;
 		}
+		/*这个if语句若没有，adminPage.jsp中24行代码的结果会出问题"
+		 <c:forEach begin="0" end="${page.totalPage-1}" varStatus="status">"
+		 即page.totalPage-1值是 -1
+		 */
+		if (totalPage == 0)
+			totalPage = 1;
+		
 		return totalPage;
 	}
 	
@@ -88,7 +95,7 @@ public class Page
 	}
 	
 	//check if there is previous page
-	public boolean hasPrevious()
+	public boolean isHasPrevious()
 	{
 		if (start == 0)
 			return false;
@@ -97,7 +104,7 @@ public class Page
 	}
 	
 	//check if there is last page
-	public boolean hasNext()
+	public boolean isHasNext()
 	{
 		if (start == getLast())
 			return false;

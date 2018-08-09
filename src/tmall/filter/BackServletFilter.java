@@ -16,13 +16,11 @@ import org.apache.commons.lang.StringUtils;
 public class BackServletFilter implements Filter
 {
 
-	@Override
 	public void destroy()
 	{
 		
 	}
 
-	@Override
 	public void doFilter(ServletRequest req, ServletResponse res,
 			FilterChain chain) throws IOException, ServletException
 	{
@@ -37,11 +35,16 @@ public class BackServletFilter implements Filter
 		if (uri.startsWith("/admin_"))
 		{
 			String servletPath = StringUtils.substringBetween(uri, "_", "_") + "Servlet";//不包含“_”
+			
+			System.out.println("测试字符串处理结果：" + servletPath);
+			
 			/*
 			 * StringUtils.substringAfter("chinachina","h")); // inachina
 			 * StringUtils.substringAfterLast("chinachina", "i"); // na "i"最后出现的位置向后截取
 			 */
 			String method = StringUtils.substringAfterLast(uri, "_");
+			
+			System.out.println("调用的方法是：" + method);
 			
 			request.setAttribute("method", method);  //向session中添加method（要清楚的一点是这个method变量就是list）
 			request.getRequestDispatcher("/" + servletPath).forward(request, response);  //进行服务器跳转
@@ -51,7 +54,6 @@ public class BackServletFilter implements Filter
 		chain.doFilter(request, response);
 	}
 
-	@Override
 	public void init(FilterConfig arg0) throws ServletException
 	{
 		

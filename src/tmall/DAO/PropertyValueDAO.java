@@ -58,8 +58,9 @@ public class PropertyValueDAO
 			conn = DBConn.getConnection();
 			String sql = "insert into PropertyValue values (null, ?, ?, ?)";
 			pstmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-			pstmt.setInt(1, propertyValue.getProperty().getId());  //某一属性的id
-			pstmt.setInt(2, propertyValue.getProduct().getId());   //某一商品的id
+			pstmt.setInt(1, propertyValue.getProduct().getId());   //某一商品的id			
+			pstmt.setInt(2, propertyValue.getProperty().getId());  //某一属性的id
+
 			pstmt.setString(3, propertyValue.getValue());
 			
 			bool = pstmt.execute();   //执行插入操作,执行结果返回给bool
@@ -113,7 +114,7 @@ public class PropertyValueDAO
 			pstmt.setInt(1, propertyValue.getProperty().getId());
 			pstmt.setInt(2, propertyValue.getProduct().getId());
 			pstmt.setString(3, propertyValue.getValue());
-			
+			pstmt.setInt(4, propertyValue.getId());
 			bool = pstmt.execute(); //执行更新语句，返回更新结果给bool
 		} catch (SQLException e)
 		{
@@ -127,7 +128,7 @@ public class PropertyValueDAO
 	//4  查(根据id查)
 	public PropertyValue get(int id)
 	{
-		PropertyValue propertyValue = null;
+		PropertyValue propertyValue = new PropertyValue();
 		//连接数据库
 		try
 		{
@@ -138,7 +139,6 @@ public class PropertyValueDAO
 			
 			if (rs.next())
 			{
-				propertyValue = new PropertyValue();
 				propertyValue.setId(id);
 				propertyValue.setValue(rs.getString("value"));
 				
@@ -227,7 +227,7 @@ public class PropertyValueDAO
 	//7  分页查  （主要用于测试）
 	public List<PropertyValue> list(int start, int count)
 	{
-		List<PropertyValue> propertyValues = null;
+		List<PropertyValue> propertyValues = new ArrayList<>();
 		
 		try
 		{
@@ -240,7 +240,6 @@ public class PropertyValueDAO
 			
 			while (rs.next())
 			{
-				propertyValues = new ArrayList<>();
 				PropertyValue propertyValue = new PropertyValue();
 				
 				propertyValue.setId(rs.getInt("id"));
@@ -284,6 +283,9 @@ public class PropertyValueDAO
 				propertyValue = new PropertyValue();
 				propertyValue.setProduct(product);
 				propertyValue.setProperty(property);
+				
+				System.out.println("测试是否成功获取属性名：" + propertyValue.getProperty().getName());
+				
 				this.add(propertyValue);
 			}
 		}
@@ -292,7 +294,7 @@ public class PropertyValueDAO
 	//10  查某产品下的全部属性值
 	public List<PropertyValue> list(int ptid)
 	{
-		List<PropertyValue> propertyValues = null;
+		List<PropertyValue> propertyValues = new ArrayList<>();
 		try
 		{
 			conn = DBConn.getConnection();
@@ -302,7 +304,6 @@ public class PropertyValueDAO
 			
 			while (rs.next())
 			{
-				propertyValues = new ArrayList<>();
 				PropertyValue propertyValue = new PropertyValue();
 				
 				propertyValue.setId(rs.getInt("id"));

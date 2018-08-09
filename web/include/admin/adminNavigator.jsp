@@ -2,10 +2,17 @@
 pageEncoding="UTF-8" isELIgnored="false"%>
 
 <div class = "navitagorDiv">
-	<nav class = "navbar navbar-default navbar-fixed-top navbar-inverse">
-		<!-- src的内容没写，因为地址还未知 -->
+		<!-- navbar-fixed-top 作用是将导航栏始终固定在窗口顶部 -->
+		<!-- navbar-inverse 作用是将导航栏反色（变成黑色背景） -->
+	<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+		<!-- 
+		src的地址内容之所以包括‘/tmall’，是因为在APACHE TOMCAT中配置了 server.xml的
+		<Context reloadable="false" debug="0" docBase="G:\\JAVA EE\\tmall\\web" path="/tmall"/>
+		中的path=“、”
+		-->
+		
 		<img style="margin-left:10-px; margin-right:0px" class="pull-left" 
-		src="" height="45px">
+		src="/tmall/imgs/site/tmallbuy.png" height="45px">
 		<!-- 加链接 -->
 		<a class="navbar-brand" href="#nowhere">天猫后台</a>
 		<a class="navbar-brand" href="#admin_category_list">分类管理</a>

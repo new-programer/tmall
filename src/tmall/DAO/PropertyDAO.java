@@ -154,7 +154,7 @@ public class PropertyDAO
 		try
 		{
 			conn = DBConn.getConnection();
-			String sql = "select count()* from property where cid = " + cid;
+			String sql = "select count(*) from property where cid = " + cid;
 			stmt = conn.createStatement();
 			rs = stmt.executeQuery(sql);
 			
